@@ -3,6 +3,7 @@ const { ApolloServer } = require("@apollo/server");
 const { readFileSync } = require("fs");
 const gql = require("graphql-tag");
 const resolvers = require("../resolvers");
+const TracksAPI = require("../datasources/tracks-api");
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({
@@ -18,24 +19,37 @@ const server = new ApolloServer({
 describe("Repository Template Functionality", () => {
   it("Execute root query", async () => {
     //Arrange
-    const query = `query ($representations: [_Any!]!) {
-      _entities(representations: $representations) {
-        ...on Thing {
-          name
-        }
+    const query = `query Track($trackId: ID!) {
+      track(id: $trackId) {
+        id
       }
     }`;
     const variables = {
-      representations: [{ __typename: "Thing", id: "1" }],
+      trackId: "c_0",
     };
-    const expected = { _entities: [{ name: "Name" }] };
+    const expected = {
+      track: {
+        id: "c_0",
+      },
+    };
+
+    const trackAPI = new TracksAPI();
+    trackAPI.getTrack = jest.fn((trackId) => ({ id: trackId }));
 
     //Act
-    const response = await server.executeOperation({ query, variables });
+    const response = await server.executeOperation(
+      { query, variables },
+      {
+        contextValue: {
+          dataSources: {
+            trackAPI,
+          },
+        },
+      }
+    );
 
     //Assert
-    // expect(response.result.data).toEqual(expected);
-    expect(response.body.kind).toEqual("single");
+    expect(response.body.singleResult.errors).toBeUndefined();
     expect(response.body.singleResult.data).toEqual(expected);
   });
 });
