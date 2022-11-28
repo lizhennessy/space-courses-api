@@ -3,12 +3,11 @@ on: push
 
 jobs:
   get_subgraph_name:
-    if: false
     uses: ./.github/workflows/apollo.yaml
 
   check_schema:
     name: Check Schema with Apollo Studio
-    needs: [ get_subgraph_name ]
+    needs: [get_subgraph_name]
     runs-on: ubuntu-latest
     env:
       APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
@@ -28,7 +27,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: "14"
+          node-version: '14'
           check-latest: true
       - name: Setup project
         run: npm install
