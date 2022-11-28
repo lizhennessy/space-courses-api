@@ -5,6 +5,7 @@ const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { startStandaloneServer } = require('@apollo/server/standalone');
 
 const resolvers = require('./resolvers');
+const TracksAPI = require('./datasources/tracks-api');
 const port = process.env.PORT || 4001;
 const subgraphName = require('../package.json').name;
 
@@ -24,6 +25,9 @@ async function main() {
       //
       // auth: req.headers.authentication,
       // foos: new FooDataSource(),
+      dataSources: {
+        trackAPI: new TracksAPI(),
+      },
     }),
     listen: { port },
   });
