@@ -17,7 +17,6 @@ extend schema
   )
 
 type Query {
-  thing(id: ID!): Thing
   "Query to get tracks array for the homepage grid"
   tracksForHome: [Track!]!
   "Fetch a specific track, provided a track's ID"
@@ -29,17 +28,6 @@ type Query {
 type Mutation {
   "Increment the number of views of a given track, when the track card is clicked"
   incrementTrackViews(id: ID!): IncrementTrackViewsResponse!
-  createThing(thing: CreateThing!): Thing
-}
-
-type Thing @key(fields: "id") {
-  id: ID!
-  name: String
-}
-
-input CreateThing {
-  id: ID!
-  name: String
 }
 
 type IncrementTrackViewsResponse {

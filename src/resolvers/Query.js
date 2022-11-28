@@ -1,11 +1,5 @@
 module.exports = {
   Query: {
-    thing(parent, { id }, context) {
-      // Access datasources on the context
-      //
-      // return context.things.getThing(id)
-      return { id, name: 'Name' };
-    },
     // returns an array of Tracks that will be used to populate the homepage grid of our web client
     tracksForHome: (_, __, { dataSources }) => {
       return dataSources.trackAPI.getTracksForHome();
