@@ -3,6 +3,7 @@ const { readFileSync } = require('fs');
 const { ApolloServer } = require('@apollo/server');
 const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { startStandaloneServer } = require('@apollo/server/standalone');
+const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } = require('@apollo/server/plugin/landingPage/default');
 
 const resolvers = require('./resolvers');
 const TracksAPI = require('./datasources/tracks-api');
@@ -17,6 +18,14 @@ async function main() {
   );
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
+    plugins: [
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+            graphRef: `${process.env.APOLLO_GRAPH_REF}`,
+            footer: false,
+          })
+        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
+    ],
   });
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => ({
@@ -32,8 +41,7 @@ async function main() {
     listen: { port },
   });
 
-  console.log(`🚀  Subgraph ready at ${url}`);
-  console.log(`Run 'rover dev --url http://localhost:${port} --name ${subgraphName}`);
+  console.log(`🚀  GraphQL API ready at ${url}`);
 }
 
 main();
