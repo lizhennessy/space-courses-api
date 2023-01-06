@@ -3,7 +3,10 @@ const { readFileSync } = require('fs');
 const { ApolloServer } = require('@apollo/server');
 const { buildSubgraphSchema } = require('@apollo/subgraph');
 const { startStandaloneServer } = require('@apollo/server/standalone');
-const { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } = require('@apollo/server/plugin/landingPage/default');
+const {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} = require('@apollo/server/plugin/landingPage/default');
 
 const resolvers = require('./resolvers');
 const TracksAPI = require('./datasources/tracks-api');
@@ -23,6 +26,7 @@ async function main() {
         ? ApolloServerPluginLandingPageProductionDefault({
             graphRef: `${process.env.APOLLO_GRAPH_REF}`,
             footer: false,
+            embed: true,
           })
         : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
     ],
