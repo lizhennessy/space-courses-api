@@ -33,11 +33,6 @@ async function main() {
   });
   const { url } = await startStandaloneServer(server, {
     context: async ({ req }) => ({
-      // Add what you need at context creation
-      //  to be available in resovlers (i.e. context.foos)
-      //
-      // auth: req.headers.authentication,
-      // foos: new FooDataSource(),
       dataSources: {
         trackAPI: new TracksAPI(),
       },
