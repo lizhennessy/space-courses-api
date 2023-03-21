@@ -6,6 +6,12 @@ The API is hosted at: https://space-courses-api.herokuapp.com/
 
 You can use the Sandbox Explorer to run queries. Check out the Operation Collections tab on the left for some sample queries to run.
 
+## Deploying to Railway
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/x6wcux)
+
+Follow the instructions after clicking the button above.
+
 ## Running locally
 
 1. Clone the repo.
