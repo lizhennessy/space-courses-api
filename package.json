@@ -1,6 +1,6 @@
 {
-  "name": "tracks",
-  "description": "A boilerplate template for Apollo Server with javascript",
+  "name": "space-courses",
+  "description": "Space Courses subgraph server",
   "version": "0.0.0",
   "license": "MIT",
   "repository": {
