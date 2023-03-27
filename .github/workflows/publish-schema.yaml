@@ -35,7 +35,5 @@ jobs:
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
 
       # Step: Publish schema to GraphOS
-      # Only if the environments variables exist
-      - if: env.APOLLO_KEY != '' &&  env.APOLLO_GRAPH_REF != '' && env.APOLLO_SUBGRAPH_NAME != ''
-        name: Publish schema to GraphOS
+      - name: Publish schema to GraphOS
         run: rover subgraph publish ${{ env.APOLLO_GRAPH_REF }} --schema schema.graphql --name ${{ env.APOLLO_SUBGRAPH_NAME }}

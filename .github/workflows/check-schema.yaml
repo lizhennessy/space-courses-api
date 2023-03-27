@@ -40,7 +40,5 @@ jobs:
           echo "$HOME/.rover/bin" >> $GITHUB_PATH
 
       # Step: Run schema checks
-      # Only if the environments variables exist
-      - if: env.APOLLO_KEY != '' &&  env.APOLLO_GRAPH_REF != '' && env.APOLLO_SUBGRAPH_NAME != ''
-        name: Run schema checks
+      - name: Run schema checks
         run: rover subgraph check ${{ env.APOLLO_GRAPH_REF }} --schema schema.graphql --name ${{ vars.APOLLO_SUBGRAPH_NAME }}
