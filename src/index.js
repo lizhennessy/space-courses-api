@@ -25,9 +25,7 @@ async function main() {
     plugins: [
       process.env.NODE_ENV === 'production'
         ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: `${process.env.APOLLO_GRAPH_REF}`,
             footer: false,
-            embed: true,
           })
         : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
     ],
